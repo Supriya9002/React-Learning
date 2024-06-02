@@ -1,0 +1,66 @@
+
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <script
+       crossorigin
+       src="https://unpkg.com/react@18/umd/react.development.js"
+     ></script>
+     <script
+       crossorigin
+       src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+     ></script>
+     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+ 
+     <title>React App</title>
+ 
+   </head>
+ 
+   <body>
+     <div id="root"></div>
+ 
+     <script type="text/babel">
+       const App = () => {
+        const students = [
+          {
+            name: "Salaj",
+            age: 20,
+            marks: 80
+          },
+          {
+            name: "gopal",
+            age: 24,
+            marks: 71,
+          }
+        ]
+
+        return(
+          <>
+            <h1>Student Details</h1>
+          <table border="2">
+            <tr>
+                <th>Student</th>
+                <th>Age</th>
+                <th>Marks</th>
+            </tr>
+            {students.map((student, index)=>( // vvip, if i hare use {} , it means it is not JSX, {} it means Javascript
+                    <tr key={index}>
+                      <td>{student.name}</td>
+                      <td>{student.age}</td>
+                      <td>{student.marks}</td>
+                    </tr>
+              ))}
+          </table>
+          </>
+        )
+       };
+ 
+       const rootElement = ReactDOM.createRoot(document.getElementById("root"));
+       rootElement.render(<App />);
+     </script>
+ 
+   </body>
+ </html>
+ 
