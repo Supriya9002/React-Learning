@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>Document</title>
+    <style>
+        #root{
+            height: 500px;
+            width: 500px;
+            margin: auto;
+        }
+        .button{
+            display: flex;
+            flex-direction: row;
+            margin: auto;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+        #root{
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" class="button"></div>
+
+    <script type="text/babel">
+        let run = 0;
+        let wic = 0;
+        let showArray = [];
+        var hit = 0;
+        let inputRef = React.createRef();
+
+        function update(num){
+            if(typeof(num)=== "number"){
+                hit = num;
+            }else{
+                hit = 'w'
+            }
+            rootElement.render(<App/>)
+            
+        }
+        function handlerSubmit(event){
+            event.preventDefault();
+            console.log("event ::", event);
+            if(typeof(hit)=== "number" && wic < 10){
+                    run += hit;
+                    //showArray.unshift(<span>{hit}":"{inputRef.current.value}</span>); //OR use
+                    showArray.unshift(<span>{`${hit==0?"DOT":hit} : ${inputRef.current.value}`}</span>)
+            }else{
+                if(wic < 10){
+                    wic += 1;
+                    //showArray.unshift(<span>{hit}":"{inputRef.current.value}</span>); //OR use
+                    showArray.unshift(<span>{`${hit==0?"DOT":hit} : ${inputRef.current.value}`}</span>)
+                }
+            }
+            hit = 0,
+            inputRef.current.value = "";
+            rootElement.render(<App/>)
+            console.log("A lo ", showArray);
+        }
+        
+        function Show(){
+            return (
+                <div>
+                {showArray.map((result, i)=>(
+                    <>
+                        {/* Hare implement res== 'W' THEN colour is res */}
+                        <p key={i} style={{color: result=="w" ?  `red` : `black`}}>
+                        {result}
+                        </p>
+                        &nbsp;&nbsp;&nbsp;
+                    </>
+                ))}
+                </div>
+            )
+        }
+        
+        function Form(){
+            return(
+                <>
+                    <form action="" onSubmit={handlerSubmit}>
+                        <input type="text" value={hit}/>&nbsp;
+                        <input type="text" ref={inputRef} placeholder="Write comment"/>
+                        <button>Submit</button>
+                    </form>
+                </>
+            )
+        }
+        function App(){
+            
+            return(
+                <div>
+                    <h1>SCORE KEEPER</h1>
+                    <p>SCORE: {run}/{wic}</p>
+                    <button onClick= {()=> {update(0)}}>0</button>
+                    <button onClick= {()=> {update(1)}}>1</button>
+                    <button onClick= {()=> {update(2)}}>2</button>
+                    <button onClick= {()=> {update(3)}}>3</button>
+                    <button onClick= {()=> {update(4)}}>4</button>
+                    <button onClick= {()=> {update(5)}}>5</button>
+                    <button onClick= {()=> {update(6)}}>6</button>
+                    <button onClick= {()=> {update("w")}}>Wicket</button>
+                    <br/>
+                    <Form/>
+                    <br/><br/>
+                    <Show/>
+                </div>
+            )
+        }
+
+        const rootElement = ReactDOM.createRoot(document.getElementById('root'))
+        rootElement.render(<App/>)
+    </script>
+</body>
+</html>
